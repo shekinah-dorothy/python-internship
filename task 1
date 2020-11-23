@@ -1,0 +1,2 @@
+m = "Life Goes On"
+print(m[1:])
