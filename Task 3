@@ -1,0 +1,33 @@
+Task#3.1
+
+dict1={"Tamil Nadu":"Chennai",
+       "Kerala":"Trivandrum"}
+dict2={"Karnataka":"Bangalore",
+       "Telengana":"Hyderabad"}
+dict1.update(dict2)
+print(dict1)
+
+Task#3.2
+
+dict1={"Tamil Nadu":"Chennai",
+       "Kerala":"Trivandrum"}
+del dict1["Tamil Nadu"]
+print{dict1)
+
+Task#3.3
+
+Keys=["Last Name","First Name"]
+Values=["Shekinah","Dorothy"]
+Name=dict(zip(keys,values))
+print(Name)
+
+Task#3.4
+
+s=len({2,7,11,12})
+print("the length of the set is:",s)
+
+Task#3.5
+
+set1={1,2,3,4,5}
+set2={4,5,6,7,8}
+print(set1-set2)
