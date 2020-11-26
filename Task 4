@@ -1,0 +1,27 @@
+Task#4.1
+
+LIST = [] 
+n = int(input("Enter number of elements : ")) 
+for i in range(0, n): 
+    ele = int(input("enter the elements: ")) 
+    LIST.append(ele)
+print(LIST)
+LIST.append(7)
+print(LIST)
+LIST.remove(7)
+print(LIST)
+a=max(LIST)
+print("maximum in the list is ",a)
+b=min(LIST)
+print("minimum inmthe list is ",b)
+
+Task#4.2
+tup=(7,12,'s','n',3)
+revtup=reversed(tup)
+print(tuple(revtup))
+
+Task#4.3
+
+tup=(7,12,'s','n')
+list_tup=list(tup)
+print(list_tup)
