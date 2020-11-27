@@ -1,0 +1,23 @@
+Task#5.1
+
+p=int(input("Enter the value of a: "))
+q=int(input("Enter the value of b: ")) 
+def func(x,y):
+    P=x+y
+    Q=x-y
+    R=x*y
+    S=x//y
+    print("Addition = ", P)
+    print("Subtraction = ", Q)
+    print("Multiplication = ", R)
+    print("Division = ", S)
+func(p,q)
+
+Task#5.2
+
+S =str(input("Enter Patient Name:"))
+T = 98
+def covid(Patient_Name,Body_Temperature):
+    print("Patient Name is",S)
+    print("Patient Body Temperature is",T)
+covid(S,T)
