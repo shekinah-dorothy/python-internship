@@ -1,0 +1,100 @@
+Task#6.1
+
+LIST=[2,7,11,12]
+for i in LIST:
+    print(i,i+2)
+    
+Task#6.2
+    
+n = int(input('Enter number: ')) 
+for i in range(n,0,-1):
+    for j in range(i,0,-1):
+        print(j,end="")
+print() 
+
+Task#6.3
+
+exercise#6.3
+
+n = int(input("Enter the value of 'n': "))
+x = 0
+y = 1
+sum = 0
+count = 1
+print("Fibonacci Sequence: ")
+while(count <= n):
+  print(sum, end = " ")
+  count += 1
+  x = y
+  y = sum
+  sum = x + y
+  
+Task#6.4
+  
+  n = int(input("Enter a number: "))
+sum = 0
+temp = n
+s=int(input("Enter the o. of digits: "))
+while temp > 0:
+   digit = temp % 10
+   sum += digit **s
+   temp //= 10
+if (n == sum):
+   print(n,"is an Armstrong number")
+else:
+   print(n,"is not an Armstrong number")
+   
+Task#6.5
+   
+   n=9
+for i in range(1,11):
+   print(n, 'x', i, '=', n*i)
+   
+Task#6.6
+   
+   n = int(input("Enter a number: "))
+if n > 0:
+   print("n is a Positive number")
+else:
+   print("n is a Negative number")
+   
+Task#6.7
+   
+   d= int(input("Enter the days:"))
+y= d / 365
+print("Number of years is:",y)
+
+Task#6.8
+
+import math
+trig=math.cos(60)+math.tan(45)-math.sin(30)
+print(trig)
+
+Task#6.9
+
+print("CALCULATOR")
+print("1-Add")
+print("2-Substract")
+print("3-Multiply")
+print("4-Divide")
+n=int(input("Enter the option(1-4):"))
+while n>0:
+    if n==1:
+        a=int(input("Enter a:"))
+        b=int(input("Enter b:"))
+        print("sum: " , a+b)
+    elif n==2:
+        a=int(input("Enter a:"))
+        b=int(input("Enter be:"))
+        print("Sub: " , a-b)
+    elif n==3:
+        a=int(input("Enter a:"))
+        b=int(input("Enter b:"))
+        print("Mul: " , a*b)
+    elif n==4:
+        a=int(input("Enter a:"))
+        b=int(input("Enter b:"))
+        print("Div: " , a//b)
+    else:
+        print("Invalid Operation")
+n=int(input())
