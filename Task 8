@@ -1,0 +1,86 @@
+Task#8.1
+
+>>> 7/0
+ZeroDivisionError: division by zero
+>>> open("X.text")
+FileNotFoundError: [Errno 2] No such file or directory: 'X.text'
+>>> C=[11,2]
+>>> C[2]
+IndexError: list index out of range
+>>> if>12
+SyntaxError: invalid syntax
+>>> import bunny
+ModuleNotFoundError: No module named 'bunny'
+>>> from math import square
+ImportError: cannot import name 'cube' from 'square' (unknown location)
+>>> '12'+7
+TypeError: can only concatenate str (not "int") to str
+>>> cooky
+NameError: name 'cooky' is not defined
+>>> 
+KeyboardInterrupt
+>>> import math
+>>> print(math.exp(120000))
+OverflowError: math range error
+>>> int("koya")
+ValueError: invalid literal for int() with base 10: 'koya'
+>>> p=11
+>>> q=12
+>>> assert p=q
+AssertionError
+
+Task#8.2
+
+print("SIMPLE CALCULATOR")
+print("Select an operation")
+print("+")
+print("-")
+print("*")
+print("/")
+def add(a, b):
+   return a + b
+def subtract(a, b):
+   return a - b
+def multiply(a, b):
+   return a * b
+def divide(a, b):
+   return a / b
+choice = input("Enter operator to use:")
+A = int(input("Enter first no.: "))
+B = int(input("Enter second no.: "))
+try:
+    if choice == '+':
+       print(A,"+",B,"=", add(A,B))
+    elif choice == '-':
+       print(A,"-",B,"=", subtract(A,B))
+    elif choice == '*':
+       print(A,"*",B,"=", multiply(A,B))
+    elif choice == '/':
+       print(A,"/",B,"=", divide(A,B))
+    else:
+       print("Invalid input")
+except Exception:
+            print("Error")
+            
+Task#8.3
+
+try:  
+    raise NameError("string")   
+except NameError: 
+    print( "An exception")
+    raise
+    
+Task#8.4
+
+if there are no run-tme errors , Try except scenarios are not required 
+
+Task#8.5
+
+X = int(input("enter a number: "))
+while True:
+    try:
+        X = int(X)
+        break
+    except ValueError:
+        print("No valid integer! Please try again ...")
+print("Great, you successfully entered an integer!")
