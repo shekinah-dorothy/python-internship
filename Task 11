@@ -1,0 +1,33 @@
+Task#11.1
+
+a = ["Kim","woo","Bin"]
+b = [28, 17,31]
+x =list(zip(a,b))
+print(x) 
+
+Task#11.2
+
+range1= list (range(1,8))
+list1=["sohyun","baekhyun","Chanyeol","rose","jisoo","jennie","lisa"]
+x=list(zip(range1,list1))
+print(x)
+
+Task#11.3
+
+a = ["descendants","of","the","sun"]
+b = [19,16,27,24]
+x=sorted(list(zip(a,b)))
+print(x)
+
+Task#11.4
+
+numbers=[12,43,56,87,23,98,34,91,65,70,19,40]
+def even_numbers(num):
+    if(num%2 == 0):
+        return True
+    else:
+        return False
+evenNumbers = filter(even_numbers, numbers)
+print('Even Numbers are:')
+for num in evenNumbers:
+    print(num)
