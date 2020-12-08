@@ -1,98 +1,124 @@
 exercise#15
 
-import turtle
+import pygame
+import sys
+import math
 
-wn = turtle.Screen()
-wn.title(" Sheki's Pong Game")
-wn.bgcolor("black")
-wn.setup(width=800, height=600)
-wn.tracer(0)
+class Ball(object):
+    def __init__(self, x, y, width, height, vx, vy, colour):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.vx = vx
+        self.vy = vy
+        self.colour = colour
 
-paddle_a = turtle.Turtle()
-paddle_a.speed(0)
-paddle_a.shape("square")
-paddle_a.color("white")
-paddle_a.penup()
-paddle_a.goto(-350, 0)
+    def render(self, screen):
+        pygame.draw.ellipse(screen, self.colour, self.rect)
 
-paddle_a.shapesize(5, 1)
-paddle_b = turtle.Turtle()
-paddle_b.speed(0)
-paddle_b.shape("square")
-paddle_b.color("white")
-paddle_b.penup()
-paddle_b.goto(350, 0)
-paddle_b.shapesize(5, 1)
+    def update(self):
+        self.x += self.vx
+        self.y += self.vy
 
-ball = turtle.Turtle()
-ball.speed(0)
-ball.shape("square")
-ball.color("white")
-ball.penup()
-ball.dx = 0.15
-ball.dy = 0.15
+    @property
+    def rect(self):
+        return pygame.Rect(self.x, self.y, self.width, self.height)
 
-pen = turtle.Turtle()
-pen.speed(0)
-pen.color('white')
-pen.penup()
-pen.goto(0, 260)
-pen.write("Player A: 0  Player B: 0", align="center", font=("Courier", 24, "bold"))
-pen.hideturtle()
 
-score_a = 0
-score_b = 0
+class Paddle(object):
+    def __init__(self, x, y, width, height, speed, colour):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.vx = 0
+        self.speed = speed
+        self.colour = colour
 
-def paddle_a_up():
-    y = paddle_a.ycor()
-    y += 20
-    paddle_a.sety(y)
+    def render(self, screen):
+        pygame.draw.rect(screen, self.colour, self.rect)
 
-def paddle_b_up():
-    y = paddle_b.ycor()
-    y += 20
-    paddle_b.sety(y)
+    def update(self):
+        self.x += self.vx
 
-def paddle_a_down():
-    y = paddle_a.ycor()
-    y += -20
-    paddle_a.sety(y)
+    def key_handler(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                self.vx = -self.speed
+            elif event.key == pygame.K_RIGHT:
+                self.vx = self.speed
+        elif event.key in (pygame.K_LEFT, pygame.K_RIGHT):
+                self.vx = 0
 
-def paddle_b_down():
-    y = paddle_b.ycor()
-    y += -20
-    paddle_b.sety(y)
-wn.listen()
-wn.onkeypress(paddle_a_up, "w")
-wn.onkeypress(paddle_a_down, "s")
-wn.onkeypress(paddle_b_up, "Up")
-wn.onkeypress(paddle_b_down, "Down")
+    @property
+    def rect(self):
+        return pygame.Rect(self.x, self.y, self.width, self.height)   
 
-while True:
-    wn.update()
-    ball.setx(ball.xcor() + ball.dx)
-    ball.sety(ball.ycor() + ball.dy)
-    if ball.ycor() > 290 or ball.ycor() < -290:
-        ball.dy *= -1
 
-    if ball.xcor() > 390:
-        ball.goto(0, 0)
-        ball.dx *= -1
-        score_a += 1
-        pen.clear()
-        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align='center', font=('Courier', 24, 'bold'))
+class Pong(object):
+    COLOURS = {"BLACK": (  0,   0,   0),
+               "WHITE": (255, 255, 255),
+               "RED"  : (255,   0,   0)}
+    def __init__(self):
+        pygame.init()
+        (WIDTH, HEIGHT) = (640, 480)
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("Lewis' Pong")
+        self.ball = Ball(5, 5, 50, 50, 5, 5, Pong.COLOURS["BLACK"])
+        self.paddle = Paddle(WIDTH / 2, HEIGHT - 50, 100,
+                             10, 3, Pong.COLOURS["BLACK"])
+        self.score = 0
 
-    if ball.xcor() < -390:
-        ball.goto(0, 0)
+    def play(self):
+        clock = pygame.time.Clock()
+        while True:
+            clock.tick(50)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type in (pygame.KEYDOWN, pygame.KEYUP):
+                    self.paddle.key_handler(event)
 
-        ball.dx *= -1
-        score_b += 1
-        pen.clear()
-        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align='center', font=('Courier', 24, 'bold'))
-    if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < paddle_b.ycor() + 60 and ball.ycor() > paddle_b.ycor() -60):
-        ball.setx(340)
-        ball.dx *= -1
+            self.collision_handler()
+            self.draw()
 
-    if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < paddle_a.ycor() + 60 and ball.ycor() > paddle_a.ycor() -60):
-        ball.setx(-340)
-        ball.dx *= -1
+    def collision_handler(self):
+        if self.ball.rect.colliderect(self.paddle.rect):
+            self.ball.vy = -self.ball.vy
+            self.score += 1
+
+        if self.ball.x + self.ball.width >= self.screen.get_width():
+            self.ball.vx = -(math.fabs(self.ball.vx))
+        elif self.ball.x <= 0:
+            self.ball.vx = math.fabs(self.ball.vx)
+
+        if self.ball.y + self.ball.height >= self.screen.get_height():
+            pygame.quit()
+            sys.exit()
+        elif self.ball.y <= 0:
+            self.ball.vy = math.fabs(self.ball.vy)
+
+        if self.paddle.x + self.paddle.width >= self.screen.get_width():
+            self.paddle.x = self.screen.get_width() - self.paddle.width
+        elif self.paddle.x <= 0:
+            self.paddle.x = 0
+
+    def draw(self):
+        self.screen.fill(Pong.COLOURS["WHITE"])
+
+        font = pygame.font.Font(None, 48)
+        score_text = font.render("Score: " + str(self.score), True,
+                                 Pong.COLOURS["RED"])
+        self.screen.blit(score_text, (0, 0))
+
+        self.ball.update()
+        self.ball.render(self.screen)
+        self.paddle.update()
+        self.paddle.render(self.screen)
+
+        pygame.display.update()
+
+if __name__ == "__main__":
+    Pong().play()
